@@ -11,14 +11,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
-import com.douraid.composedemo.model.UsersListState
+import com.douraid.composedemo.model.StudiesListState
 import com.douraid.composedemo.ui.theme.ComposeDemoTheme
-import com.douraid.composedemo.viewmodel.UsersListViewModel
-import com.douraid.composedemo.viewmodel.UsersListViewModelFactory
+import com.douraid.composedemo.viewmodel.CaseStudiesViewModel
+import com.douraid.composedemo.viewmodel.StudiesListViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val usersListViewModel: UsersListViewModel by viewModels{
-        UsersListViewModelFactory()
+
+    @Inject
+    internal lateinit var studiesListViewModelFactory: StudiesListViewModelFactory
+
+    private val caseStudiesViewModel: CaseStudiesViewModel by viewModels {
+        studiesListViewModelFactory
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +34,7 @@ class MainActivity : ComponentActivity() {
             ComposeDemoTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    GreetingWithViewModel(usersListViewModel)
+                    GreetingWithViewModel(caseStudiesViewModel)
                 }
             }
         }
@@ -35,9 +42,13 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun GreetingWithViewModel(usersListViewModel: UsersListViewModel){
-    val currentState:State<UsersListState> = usersListViewModel.viewState.collectAsState()
-    Greeting(name = currentState.value.users.first().firstName)
+fun GreetingWithViewModel(caseStudiesViewModel: CaseStudiesViewModel) {
+    val currentState: State<StudiesListState> = caseStudiesViewModel.viewState.collectAsState()
+    when (val result = currentState.value) {
+        is StudiesListState.Loaded -> Greeting(name = result.caseStudies.first().title)
+        else -> Greeting(name = "error")
+    }
+
 }
 
 @Composable
