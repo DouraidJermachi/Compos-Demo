@@ -1,10 +1,11 @@
 package com.douraid.composedemo.view.home_screen
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -12,51 +13,84 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.douraid.composedemo.api.dto.CaseStudy
 import com.douraid.composedemo.ui.theme.ComposeDemoTheme
 import com.douraid.composedemo.utils.image.NetworkImage
-import com.douraid.composedemo.view.utils.SmallSpacer
+import com.douraid.composedemo.view.utils.XSmallSpacer
 import com.douraid.composedemo.view.utils.XXSmallSpacer
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CaseStudyCardShort(caseStudy: CaseStudy) {
-    Column(
+fun CaseStudyCardShort(
+    navController: NavController,
+    caseStudy: CaseStudy,
+    isMainScreen: Boolean
+) {
+    Card(
+        shape = MaterialTheme.shapes.small,
         modifier = Modifier
-            .padding(horizontal = 16.dp)
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxWidth()
+            .heightIn(320.dp),
+        onClick = {
+            if (isMainScreen) navController.navigate("details")
+        }
     ) {
-        CaseStudyTitle(caseStudy.client)
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            XXSmallSpacer()
 
-        SmallSpacer()
+            CaseStudyTitle(caseStudy.client)
 
-        caseStudy.heroImageUrl?.let {
-            NetworkImage(
-                heroImageUrl = it,
-                contentDescription = "${caseStudy.title}, Image",
+            XSmallSpacer()
+
+            caseStudy.heroImageUrl?.let {
+                NetworkImage(
+                    heroImageUrl = it,
+                    contentDescription = "${caseStudy.title}, Image",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(240.dp)
+                        .padding(horizontal = 16.dp)
+                )
+            }
+
+//            Image(
+//                painter = painterResource(id = R.drawable.image_place_holder),
+//                contentDescription = null,
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .heightIn(240.dp)
+//                    .padding(horizontal = 16.dp)
+//            )
+
+            XXSmallSpacer()
+
+            Text(
+                text = caseStudy.title,
+                style = MaterialTheme.typography.h2,
                 modifier = Modifier
-                    .fillMaxSize()
                     .padding(horizontal = 16.dp)
             )
+
+            Text(
+                text = caseStudy.vertical,
+                style = MaterialTheme.typography.caption,
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+                    .padding(horizontal = 16.dp)
+                    .align(Alignment.End)
+            )
+
+            if (isMainScreen) {
+                TeaserText(caseStudy.teaser)
+                XSmallSpacer()
+            }
         }
-
-        XXSmallSpacer()
-
-        Text(
-            text = caseStudy.title,
-            style = MaterialTheme.typography.h2,
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-        )
-
-        Text(
-            text = caseStudy.vertical,
-            style = MaterialTheme.typography.caption,
-            modifier = Modifier
-                .padding(bottom = 8.dp)
-                .padding(horizontal = 16.dp)
-                .align(Alignment.End)
-        )
     }
 }
 
@@ -72,12 +106,23 @@ private fun CaseStudyTitle(client: String?) {
     }
 }
 
+@Composable
+private fun TeaserText(teaser: String) = Text(
+    text = teaser,
+    style = MaterialTheme.typography.h2,
+    modifier = Modifier
+        .padding(horizontal = 16.dp)
+)
 
 @Preview
 @Composable
 private fun PreviewLightCaseStudyCard() {
     ComposeDemoTheme(darkTheme = false) {
-        CaseStudyCardShort(caseStudy = caseStudyForPreview)
+        CaseStudyCardShort(
+            navController = rememberNavController(),
+            caseStudy = caseStudyForPreview,
+            isMainScreen = true
+        )
     }
 }
 
@@ -85,7 +130,11 @@ private fun PreviewLightCaseStudyCard() {
 @Composable
 private fun PreviewDarkCaseStudyCard() {
     ComposeDemoTheme(darkTheme = true) {
-        CaseStudyCardShort(caseStudy = caseStudyForPreview)
+        CaseStudyCardShort(
+            navController = rememberNavController(),
+            caseStudy = caseStudyForPreview,
+            isMainScreen = true
+        )
     }
 }
 

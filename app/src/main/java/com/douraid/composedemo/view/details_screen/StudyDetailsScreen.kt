@@ -13,6 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.douraid.composedemo.api.dto.CaseStudy
 import com.douraid.composedemo.api.dto.CaseStudyBody
 import com.douraid.composedemo.api.dto.CaseStudyDetails
@@ -26,6 +28,7 @@ import com.douraid.composedemo.view.utils.XXSmallSpacer
 
 @Composable
 fun StudyDetailsScreen(
+    navController: NavController,
     caseStudy: CaseStudy,
     caseStudyDetails: CaseStudyDetails
 ) {
@@ -40,7 +43,11 @@ fun StudyDetailsScreen(
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
         ) {
-            CaseStudyCardShort(caseStudy = caseStudy)
+            CaseStudyCardShort(
+                navController = navController,
+                caseStudy = caseStudy,
+                isMainScreen = false
+            )
 
             caseStudyDetails.sections.forEach { section ->
                 ComposeCaseSection(section)
@@ -84,6 +91,7 @@ private fun ComposeCaseSection(section: CaseStudySection) {
 private fun PreviewLightStudyDetailsScreen() {
     ComposeDemoTheme(darkTheme = false) {
         StudyDetailsScreen(
+            navController = rememberNavController(),
             caseStudy = caseStudyForPreview,
             caseStudyDetails = caseStudyDetailsForPreview
         )
@@ -95,6 +103,7 @@ private fun PreviewLightStudyDetailsScreen() {
 private fun PreviewDarkStudyDetailsScreen() {
     ComposeDemoTheme(darkTheme = true) {
         StudyDetailsScreen(
+            navController = rememberNavController(),
             caseStudy = caseStudyForPreview,
             caseStudyDetails = caseStudyDetailsForPreview
         )

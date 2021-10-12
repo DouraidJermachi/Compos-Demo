@@ -21,14 +21,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.douraid.composedemo.R
 import com.douraid.composedemo.api.dto.CaseStudy
 import com.douraid.composedemo.ui.theme.ComposeDemoTheme
 import com.douraid.composedemo.view.utils.SmallSpacer
 import com.douraid.composedemo.view.utils.XLargeSpacer
+import com.douraid.composedemo.view.utils.XXSmallSpacer
 
 @Composable
 fun StudiesListScreen(
+    navController: NavController,
     caseStudies: List<CaseStudy>
 ) {
     Surface(
@@ -54,9 +58,8 @@ fun StudiesListScreen(
 
             val selectedCase = caseStudies.first()
 
-            CaseStudyCardShort(selectedCase)
+            CaseStudyCardShort(navController,selectedCase, true)
 
-            TeaserText(selectedCase.teaser)
         }
     }
 }
@@ -87,15 +90,6 @@ private fun SearchInput() {
 }
 
 @Composable
-private fun TeaserText(teaser: String) = Text(
-    text = teaser,
-    style = MaterialTheme.typography.h2,
-    modifier = Modifier
-        .padding(horizontal = 16.dp)
-)
-
-
-@Composable
 private fun LogoImage() {
     //We could change icons depending on the theme
     val isLight = MaterialTheme.colors.isLight
@@ -118,6 +112,7 @@ private fun LogoImage() {
 private fun PreviewLightStudiesListScreen() {
     ComposeDemoTheme(darkTheme = false) {
         StudiesListScreen(
+            navController = rememberNavController(),
             caseStudies = caseStudiesListForPreview
         )
     }
@@ -128,6 +123,7 @@ private fun PreviewLightStudiesListScreen() {
 private fun PreviewDarkStudiesListScreen() {
     ComposeDemoTheme(darkTheme = true) {
         StudiesListScreen(
+            navController = rememberNavController(),
             caseStudies = caseStudiesListForPreview
         )
     }

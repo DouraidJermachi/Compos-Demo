@@ -10,6 +10,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.douraid.composedemo.model.StudiesListState
 import com.douraid.composedemo.model.StudyDetailsState
 import com.douraid.composedemo.ui.theme.ComposeDemoTheme
@@ -42,39 +46,29 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeDemoTheme {
 
-                DefaultSurface {
-                    StudiesListWithViewModel(caseStudiesViewModel)
+                val navController = rememberNavController()
+
+                NavHost(
+                    navController = navController,
+                    startDestination = "home"
+                ) {
+                    composable(route = "home") {
+                        DefaultSurface {
+                            StudiesListWithViewModel(navController, caseStudiesViewModel)
+                        }
+                    }
+                    composable(route = "details") {
+                        DefaultSurface {
+                            StudyDetailsWithViewModel(navController, studyDetailsViewModel)
+                        }
+                    }
+                    composable(route = "search") {
+                        Surface(color = MaterialTheme.colors.background) {
+                            Text(text = "Search results screen")
+                        }
+                    }
+
                 }
-
-                //details screen
-//                DefaultSurface {
-//                    StudyDetailsWithViewModel(studyDetailsViewModel)
-//                }
-
-                //navigation
-//                val navController = rememberNavController()
-//
-//                NavHost(
-//                    navController = navController,
-//                    startDestination = "home"
-//                ) {
-//                    composable(route = "home") {
-//                        Surface(color = MaterialTheme.colors.background) {
-//                            StudiesListWithViewModel(caseStudiesViewModel, navController)
-//                        }
-//                    }
-//                    composable(route = "full") {
-//                        Surface(color = MaterialTheme.colors.background) {
-//                            Text(text = "Case Study full screen")
-//                        }
-//                    }
-//                    composable(route = "search") {
-//                        Surface(color = MaterialTheme.colors.background) {
-//                            Text(text = "Search results screen")
-//                        }
-//                    }
-//
-//                }
 
             }
         }
@@ -91,11 +85,13 @@ fun DefaultSurface(content: @Composable () -> Unit) {
 
 @Composable
 fun StudiesListWithViewModel(
+    navController: NavController,
     caseStudiesViewModel: CaseStudiesViewModel
 ) {
     val currentState: State<StudiesListState> = caseStudiesViewModel.viewState.collectAsState()
     when (val result = currentState.value) {
         is StudiesListState.Loaded -> StudiesListScreen(
+            navController = navController,
             caseStudies = result.caseStudies
         )
         is StudiesListState.Loading -> Text(text = "Loading...")
@@ -106,11 +102,13 @@ fun StudiesListWithViewModel(
 
 @Composable
 fun StudyDetailsWithViewModel(
+    navController: NavController,
     studyViewModel: StudyDetailsViewModel
 ) {
     val currentState: State<StudyDetailsState> = studyViewModel.viewState.collectAsState()
     when (val result = currentState.value) {
         is StudyDetailsState.Loaded -> StudyDetailsScreen(
+            navController = navController,
             caseStudy = result.caseStudy,
             caseStudyDetails = result.caseStudyDetails
         )
