@@ -9,9 +9,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.douraid.composedemo.api.dto.CaseStudy
+import com.douraid.composedemo.model.SelectionState
 
 @Composable
-fun CaseStudiesHorizontalRow(caseStudies: List<CaseStudy>) {
+fun CaseStudiesHorizontalRow(
+    caseStudies: List<CaseStudy>,
+    onSelectCaseStudy: (CaseStudy) -> Unit,
+    selectedCaseStudy: CaseStudy
+) {
     Row(//todo use LazyRow instead
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier
@@ -19,7 +24,13 @@ fun CaseStudiesHorizontalRow(caseStudies: List<CaseStudy>) {
             .padding(start = 16.dp)
     ) {
         caseStudies.forEach { caseStudy ->
-            CaseStudyCardMini(caseStudy = caseStudy)
+            val selectionState =
+                if (selectedCaseStudy.id == caseStudy.id) SelectionState.Selected else SelectionState.Unselected
+            CaseStudyCardMini(
+                caseStudy = caseStudy,
+                onSelectCaseStudy = onSelectCaseStudy,
+                selectionState = selectionState
+            )
         }
     }
 }

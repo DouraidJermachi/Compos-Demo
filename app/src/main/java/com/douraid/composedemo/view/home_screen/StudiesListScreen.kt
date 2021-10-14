@@ -15,6 +15,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -28,18 +30,20 @@ import com.douraid.composedemo.api.dto.CaseStudy
 import com.douraid.composedemo.ui.theme.ComposeDemoTheme
 import com.douraid.composedemo.view.utils.SmallSpacer
 import com.douraid.composedemo.view.utils.XLargeSpacer
-import com.douraid.composedemo.view.utils.XXSmallSpacer
 
 @Composable
 fun StudiesListScreen(
     navController: NavController,
-    caseStudies: List<CaseStudy>
+    caseStudies: List<CaseStudy>,
+    initialCaseStudy: CaseStudy = caseStudies.first()
 ) {
     Surface(
         color = MaterialTheme.colors.background,
         modifier = Modifier
             .fillMaxSize()
     ) {
+        val selectedCaseStudy = remember { mutableStateOf(initialCaseStudy) }
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -52,13 +56,14 @@ fun StudiesListScreen(
 
             SmallSpacer()
 
-            CaseStudiesHorizontalRow(caseStudies)
+            val onSelectCaseStudy: (CaseStudy) -> Unit = { caseStudy ->
+                selectedCaseStudy.value = caseStudy
+            }
+            CaseStudiesHorizontalRow(caseStudies, onSelectCaseStudy, selectedCaseStudy.value)
 
             SmallSpacer()
 
-            val selectedCase = caseStudies.first()
-
-            CaseStudyCardShort(navController,selectedCase, true)
+            CaseStudyCardShort(navController, selectedCaseStudy.value, true)
 
         }
     }

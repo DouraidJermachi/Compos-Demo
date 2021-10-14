@@ -23,12 +23,7 @@ class StudyDetailsViewModel(
         loadStudyDetails()
     }
 
-    fun onRetrySelected() {
-        loadStudyDetails()
-    }
-
     private fun loadStudyDetails() {
-        _viewState.value = StudyDetailsState.Loading
 
         viewModelScope.launch {
             _viewState.value =
