@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class StudyDetailsViewModel(
-    private val caseStudy: CaseStudy,
     private val caseStudyDetailsUseCase: CaseStudyDetailsUseCase
 ) : ViewModel() {
 
@@ -19,11 +18,7 @@ class StudyDetailsViewModel(
         MutableStateFlow(StudyDetailsState.Loading)
     val viewState: StateFlow<StudyDetailsState> = _viewState
 
-    init {
-        loadStudyDetails()
-    }
-
-    private fun loadStudyDetails() {
+    fun loadStudyDetails(caseStudy: CaseStudy) {
 
         viewModelScope.launch {
             _viewState.value =

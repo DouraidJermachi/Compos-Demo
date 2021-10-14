@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.douraid.composedemo.api.dto.CaseStudy
 import com.douraid.composedemo.model.StudiesListState
 import com.douraid.composedemo.model.StudyDetailsState
 import com.douraid.composedemo.ui.theme.ComposeDemoTheme
@@ -50,16 +51,26 @@ class MainActivity : ComponentActivity() {
 
                 NavHost(
                     navController = navController,
-                    startDestination = "home"
+                    startDestination = Screen.Home.route
                 ) {
-                    composable(route = "home") {
+                    composable(route = Screen.Home.route) {
                         DefaultSurface {
                             StudiesListWithViewModel(navController, caseStudiesViewModel)
                         }
                     }
-                    composable(route = "details") {
-                        DefaultSurface {
-                            StudyDetailsWithViewModel(navController, studyDetailsViewModel)
+                    composable(
+                        route = Screen.Details.route + "/{id}/{title}/{client}/{vertical}/{heroImageUrl}",
+                        arguments = detailsScreenArguments
+                    ) { navBackStackEntry ->
+
+                        navBackStackEntry.getCaseStudy?.let { caseStudy ->
+                            DefaultSurface {
+                                StudyDetailsWithViewModel(
+                                    navController,
+                                    studyDetailsViewModel,
+                                    caseStudy
+                                )
+                            }
                         }
                     }
                     composable(route = "search") {
@@ -103,8 +114,11 @@ fun StudiesListWithViewModel(
 @Composable
 fun StudyDetailsWithViewModel(
     navController: NavController,
-    studyViewModel: StudyDetailsViewModel
+    studyViewModel: StudyDetailsViewModel,
+    selectedCaseStudy: CaseStudy
 ) {
+    studyViewModel.loadStudyDetails(selectedCaseStudy)
+
     val currentState: State<StudyDetailsState> = studyViewModel.viewState.collectAsState()
     when (val result = currentState.value) {
         is StudyDetailsState.Loaded -> StudyDetailsScreen(

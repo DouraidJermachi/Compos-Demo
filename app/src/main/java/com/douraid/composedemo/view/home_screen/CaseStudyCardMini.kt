@@ -23,6 +23,7 @@ import coil.compose.rememberImagePainter
 import com.douraid.composedemo.api.dto.CaseStudy
 import com.douraid.composedemo.model.SelectionState
 import com.douraid.composedemo.ui.theme.ComposeDemoTheme
+import com.douraid.composedemo.view.utils.caseStudyForPreview
 
 @Composable
 fun CaseStudyCardMini(
@@ -87,13 +88,3 @@ private fun PreviewLightCaseStudyCard() {
         )
     }
 }
-
-private val caseStudyForPreview = CaseStudy(
-    id = 1,
-    client = "TfL",
-    teaser = "Testing Tube brakes, with TfL Decelerator",
-    vertical = "Public Sector",
-    isEnterprise = true,
-    title = "A World-First For Apple iPad",
-    heroImageUrl = "https://raw.githubusercontent.com/theappbusiness/engineering-challenge/main/endpoints/v1/images/decelerator_header-image-2x.jpg"
-)

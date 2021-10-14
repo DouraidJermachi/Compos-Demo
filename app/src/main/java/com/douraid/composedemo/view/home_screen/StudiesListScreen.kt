@@ -30,6 +30,7 @@ import com.douraid.composedemo.api.dto.CaseStudy
 import com.douraid.composedemo.ui.theme.ComposeDemoTheme
 import com.douraid.composedemo.view.utils.SmallSpacer
 import com.douraid.composedemo.view.utils.XLargeSpacer
+import com.douraid.composedemo.view.utils.caseStudiesListForPreview
 
 @Composable
 fun StudiesListScreen(
@@ -133,33 +134,3 @@ private fun PreviewDarkStudiesListScreen() {
         )
     }
 }
-
-private val caseStudiesListForPreview: List<CaseStudy> = listOf(
-    CaseStudy(
-        id = 8,
-        client = "M&S",
-        teaser = "Building a new payments experience for a high street icon",
-        vertical = "Retail",
-        isEnterprise = false,
-        title = "Rapidly Delivering A New Service For A High Street Icon",
-        heroImageUrl = "https://raw.githubusercontent.com/theappbusiness/engineering-challenge/main/endpoints/v1/images/cs_ms_hero_image-2x.jpg"
-    ),
-    CaseStudy(
-        id = 6,
-        client = "Unilever",
-        teaser = "Enabling smartfast decisions inside global giant Unilever",
-        vertical = "FMCG",
-        isEnterprise = true,
-        title = "Enabling Faster Business Decisions",
-        heroImageUrl = "https://raw.githubusercontent.com/theappbusiness/engineering-challenge/main/endpoints/v1/images/oneview-hero-2x.jpg"
-    ),
-    CaseStudy(
-        id = 1,
-        client = "TfL",
-        teaser = "Testing Tube brakes, with TfL Decelerator",
-        vertical = "Public Sector",
-        isEnterprise = true,
-        title = "A World-First For Apple iPad",
-        heroImageUrl = "https://raw.githubusercontent.com/theappbusiness/engineering-challenge/main/endpoints/v1/images/decelerator_header-image-2x.jpg"
-    )
-)

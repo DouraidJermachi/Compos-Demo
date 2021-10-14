@@ -1,10 +1,9 @@
 package com.douraid.composedemo.view.home_screen
 
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -17,13 +16,12 @@ fun CaseStudiesHorizontalRow(
     onSelectCaseStudy: (CaseStudy) -> Unit,
     selectedCaseStudy: CaseStudy
 ) {
-    Row(//todo use LazyRow instead
+    LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier
-            .horizontalScroll(rememberScrollState())
             .padding(start = 16.dp)
     ) {
-        caseStudies.forEach { caseStudy ->
+        items(caseStudies) { caseStudy ->
             val selectionState =
                 if (selectedCaseStudy.id == caseStudy.id) SelectionState.Selected else SelectionState.Unselected
             CaseStudyCardMini(

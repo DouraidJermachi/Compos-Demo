@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class CaseStudy(
     val id: Int,
     val client: String?,
-    val teaser: String,
+    val teaser: String?,
     val vertical: String,
     val isEnterprise: Boolean,
     val title: String,

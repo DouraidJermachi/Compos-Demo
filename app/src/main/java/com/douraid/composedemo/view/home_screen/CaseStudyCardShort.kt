@@ -18,8 +18,10 @@ import androidx.navigation.compose.rememberNavController
 import com.douraid.composedemo.api.dto.CaseStudy
 import com.douraid.composedemo.ui.theme.ComposeDemoTheme
 import com.douraid.composedemo.utils.image.NetworkImage
+import com.douraid.composedemo.view.Screen
 import com.douraid.composedemo.view.utils.XSmallSpacer
 import com.douraid.composedemo.view.utils.XXSmallSpacer
+import com.douraid.composedemo.view.utils.caseStudyForPreview
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -32,9 +34,17 @@ fun CaseStudyCardShort(
         shape = MaterialTheme.shapes.small,
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(320.dp),
+            .heightIn(if (isMainScreen) 320.dp else 240.dp),
         onClick = {
-            if (isMainScreen) navController.navigate("details")
+            if (isMainScreen) navController.navigate(
+                Screen.Details.withArgs(
+                    caseStudy.id.toString(),
+                    caseStudy.title,
+                    caseStudy.client,
+                    caseStudy.vertical,
+                    caseStudy.heroImageUrl?.replace('/', '*'),
+                )
+            )
         }
     ) {
         Column(
@@ -55,7 +65,7 @@ fun CaseStudyCardShort(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(240.dp)
-                        .padding(horizontal = 16.dp)
+                        .padding(top = 16.dp)
                 )
             }
 
@@ -68,28 +78,44 @@ fun CaseStudyCardShort(
 //                    .padding(horizontal = 16.dp)
 //            )
 
-            XXSmallSpacer()
-
-            Text(
-                text = caseStudy.title,
-                style = MaterialTheme.typography.h2,
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-            )
-
-            Text(
-                text = caseStudy.vertical,
-                style = MaterialTheme.typography.caption,
-                modifier = Modifier
-                    .padding(bottom = 8.dp)
-                    .padding(horizontal = 16.dp)
-                    .align(Alignment.End)
-            )
-
             if (isMainScreen) {
-                TeaserText(caseStudy.teaser)
-                XSmallSpacer()
+                CaseStudyTeaser(caseStudy)
             }
+        }
+    }
+}
+
+@Composable
+private fun CaseStudyTeaser(
+    caseStudy: CaseStudy
+) {
+
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        XXSmallSpacer()
+
+        Text(
+            text = caseStudy.title,
+            style = MaterialTheme.typography.h2,
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+        )
+
+        Text(
+            text = caseStudy.vertical,
+            style = MaterialTheme.typography.caption,
+            modifier = Modifier
+                .padding(bottom = 8.dp)
+                .padding(horizontal = 16.dp)
+                .align(Alignment.End)
+        )
+
+        caseStudy.teaser?.let {
+            TeaserText(it)
+            XSmallSpacer()
         }
     }
 }
@@ -137,13 +163,3 @@ private fun PreviewDarkCaseStudyCard() {
         )
     }
 }
-
-private val caseStudyForPreview = CaseStudy(
-    id = 1,
-    client = "TfL",
-    teaser = "Testing Tube brakes, with TfL Decelerator",
-    vertical = "Public Sector",
-    isEnterprise = true,
-    title = "A World-First For Apple iPad",
-    heroImageUrl = "https://raw.githubusercontent.com/theappbusiness/engineering-challenge/main/endpoints/v1/images/decelerator_header-image-2x.jpg"
-)
