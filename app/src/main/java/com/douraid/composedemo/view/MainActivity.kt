@@ -4,12 +4,16 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,6 +22,7 @@ import com.douraid.composedemo.api.dto.CaseStudy
 import com.douraid.composedemo.model.StudiesListState
 import com.douraid.composedemo.model.StudyDetailsState
 import com.douraid.composedemo.ui.theme.ComposeDemoTheme
+import com.douraid.composedemo.utils.usable_views.CaseStudyStandardProgressBar
 import com.douraid.composedemo.view.details_screen.StudyDetailsScreen
 import com.douraid.composedemo.view.home_screen.StudiesListScreen
 import com.douraid.composedemo.viewmodel.CaseStudiesViewModel
@@ -105,7 +110,7 @@ fun StudiesListWithViewModel(
             navController = navController,
             caseStudies = result.caseStudies
         )
-        is StudiesListState.Loading -> Text(text = "Loading...")
+        is StudiesListState.Loading -> CaseStudyStandardProgressBar()
         else -> Text(text = " Hello there is an error")
         //todo handle other states
     }

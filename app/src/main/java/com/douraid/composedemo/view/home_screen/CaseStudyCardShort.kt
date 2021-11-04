@@ -1,5 +1,6 @@
 package com.douraid.composedemo.view.home_screen
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -11,10 +12,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.douraid.composedemo.R
 import com.douraid.composedemo.api.dto.CaseStudy
 import com.douraid.composedemo.ui.theme.ComposeDemoTheme
 import com.douraid.composedemo.utils.image.NetworkImage
@@ -70,7 +73,7 @@ fun CaseStudyCardShort(
             }
 
 //            Image(
-//                painter = painterResource(id = R.drawable.image_place_holder),
+//                painter = painterResource(id = R.drawable.ic_wolf_testing),
 //                contentDescription = null,
 //                modifier = Modifier
 //                    .fillMaxWidth()
