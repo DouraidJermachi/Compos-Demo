@@ -1,6 +1,5 @@
 package com.douraid.composedemo.view.home_screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -12,15 +11,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.douraid.composedemo.R
 import com.douraid.composedemo.api.dto.CaseStudy
 import com.douraid.composedemo.ui.theme.ComposeDemoTheme
-import com.douraid.composedemo.utils.image.NetworkImage
+import com.douraid.composedemo.utils.image.CoilImage
 import com.douraid.composedemo.view.Screen
 import com.douraid.composedemo.view.utils.XSmallSpacer
 import com.douraid.composedemo.view.utils.XXSmallSpacer
@@ -62,8 +59,8 @@ fun CaseStudyCardShort(
             XSmallSpacer()
 
             caseStudy.heroImageUrl?.let {
-                NetworkImage(
-                    heroImageUrl = it,
+                CoilImage(
+                    url = it,
                     contentDescription = "${caseStudy.title}, Image",
                     modifier = Modifier
                         .fillMaxWidth()
@@ -71,15 +68,6 @@ fun CaseStudyCardShort(
                         .padding(top = 16.dp)
                 )
             }
-
-//            Image(
-//                painter = painterResource(id = R.drawable.ic_wolf_testing),
-//                contentDescription = null,
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .heightIn(240.dp)
-//                    .padding(horizontal = 16.dp)
-//            )
 
             if (isMainScreen) {
                 CaseStudyTeaser(caseStudy)
