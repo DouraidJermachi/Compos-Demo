@@ -13,8 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.douraid.composedemo.api.dto.CaseStudy
 import com.douraid.composedemo.api.dto.CaseStudyBody
 import com.douraid.composedemo.api.dto.CaseStudyDetails
@@ -30,7 +28,6 @@ import com.douraid.composedemo.view.utils.caseStudyForPreview
 
 @Composable
 fun StudyDetailsScreen(
-    navController: NavController,
     caseStudy: CaseStudy,
     caseStudyDetails: CaseStudyDetails
 ) {
@@ -47,7 +44,7 @@ fun StudyDetailsScreen(
         ) {
             items(listOf(caseStudy)) { caseStudy ->
                 CaseStudyCardShort(
-                    navController = navController,
+                    onCaseStudyClicked = {},
                     caseStudy = caseStudy,
                     isMainScreen = false
                 )
@@ -74,7 +71,7 @@ private fun ComposeCaseSection(section: CaseStudySection) {
             }
             is CaseStudyBody.BodyImage -> {
                 CoilImage(
-                    url =  body.value,
+                    url = body.value,
                     contentDescription = "Image",
                     modifier = Modifier
                         .fillMaxWidth()
@@ -96,7 +93,6 @@ private fun ComposeCaseSection(section: CaseStudySection) {
 private fun PreviewLightStudyDetailsScreen() {
     ComposeDemoTheme(darkTheme = false) {
         StudyDetailsScreen(
-            navController = rememberNavController(),
             caseStudy = caseStudyForPreview,
             caseStudyDetails = caseStudyDetailsForPreview
         )
@@ -108,7 +104,6 @@ private fun PreviewLightStudyDetailsScreen() {
 private fun PreviewDarkStudyDetailsScreen() {
     ComposeDemoTheme(darkTheme = true) {
         StudyDetailsScreen(
-            navController = rememberNavController(),
             caseStudy = caseStudyForPreview,
             caseStudyDetails = caseStudyDetailsForPreview
         )

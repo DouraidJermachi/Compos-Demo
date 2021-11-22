@@ -13,12 +13,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.douraid.composedemo.api.dto.CaseStudy
 import com.douraid.composedemo.ui.theme.ComposeDemoTheme
 import com.douraid.composedemo.utils.image.CoilImage
-import com.douraid.composedemo.view.Screen
 import com.douraid.composedemo.view.utils.XSmallSpacer
 import com.douraid.composedemo.view.utils.XXSmallSpacer
 import com.douraid.composedemo.view.utils.caseStudyForPreview
@@ -26,7 +23,7 @@ import com.douraid.composedemo.view.utils.caseStudyForPreview
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CaseStudyCardShort(
-    navController: NavController,
+    onCaseStudyClicked: (CaseStudy) -> Unit,
     caseStudy: CaseStudy,
     isMainScreen: Boolean
 ) {
@@ -35,17 +32,7 @@ fun CaseStudyCardShort(
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(if (isMainScreen) 320.dp else 240.dp),
-        onClick = {
-            if (isMainScreen) navController.navigate(
-                Screen.Details.withArgs(
-                    caseStudy.id.toString(),
-                    caseStudy.title,
-                    caseStudy.client,
-                    caseStudy.vertical,
-                    caseStudy.heroImageUrl?.replace('/', '*'),
-                )
-            )
-        }
+        onClick = { onCaseStudyClicked(caseStudy) }
     ) {
         Column(
             modifier = Modifier
@@ -136,7 +123,7 @@ private fun TeaserText(teaser: String) = Text(
 private fun PreviewLightCaseStudyCard() {
     ComposeDemoTheme(darkTheme = false) {
         CaseStudyCardShort(
-            navController = rememberNavController(),
+            onCaseStudyClicked = {},
             caseStudy = caseStudyForPreview,
             isMainScreen = true
         )
@@ -148,7 +135,7 @@ private fun PreviewLightCaseStudyCard() {
 private fun PreviewDarkCaseStudyCard() {
     ComposeDemoTheme(darkTheme = true) {
         CaseStudyCardShort(
-            navController = rememberNavController(),
+            onCaseStudyClicked = {},
             caseStudy = caseStudyForPreview,
             isMainScreen = true
         )

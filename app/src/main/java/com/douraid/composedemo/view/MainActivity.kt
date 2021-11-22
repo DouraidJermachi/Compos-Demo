@@ -4,17 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -53,6 +48,7 @@ class MainActivity : ComponentActivity() {
             ComposeDemoTheme {
 
                 val navController = rememberNavController()
+                val caseStudiesNavigation = CaseStudiesNavigation(navController)
 
                 NavHost(
                     navController = navController,
@@ -60,7 +56,10 @@ class MainActivity : ComponentActivity() {
                 ) {
                     composable(route = Screen.Home.route) {
                         DefaultSurface {
-                            StudiesListWithViewModel(navController, caseStudiesViewModel)
+                            StudiesListWithViewModel(
+                                caseStudiesNavigation.navigateToDetailsScreen,
+                                caseStudiesViewModel
+                            )
                         }
                     }
                     composable(
@@ -71,7 +70,6 @@ class MainActivity : ComponentActivity() {
                         navBackStackEntry.getCaseStudy?.let { caseStudy ->
                             DefaultSurface {
                                 StudyDetailsWithViewModel(
-                                    navController,
                                     studyDetailsViewModel,
                                     caseStudy
                                 )
@@ -101,13 +99,13 @@ fun DefaultSurface(content: @Composable () -> Unit) {
 
 @Composable
 fun StudiesListWithViewModel(
-    navController: NavController,
+    onCaseStudyClicked: (CaseStudy) -> Unit,
     caseStudiesViewModel: CaseStudiesViewModel
 ) {
     val currentState: State<StudiesListState> = caseStudiesViewModel.viewState.collectAsState()
     when (val result = currentState.value) {
         is StudiesListState.Loaded -> StudiesListScreen(
-            navController = navController,
+            onCaseStudyClicked = onCaseStudyClicked,
             caseStudies = result.caseStudies
         )
         is StudiesListState.Loading -> CaseStudyStandardProgressBar()
@@ -118,7 +116,6 @@ fun StudiesListWithViewModel(
 
 @Composable
 fun StudyDetailsWithViewModel(
-    navController: NavController,
     studyViewModel: StudyDetailsViewModel,
     selectedCaseStudy: CaseStudy
 ) {
@@ -127,7 +124,6 @@ fun StudyDetailsWithViewModel(
     val currentState: State<StudyDetailsState> = studyViewModel.viewState.collectAsState()
     when (val result = currentState.value) {
         is StudyDetailsState.Loaded -> StudyDetailsScreen(
-            navController = navController,
             caseStudy = result.caseStudy,
             caseStudyDetails = result.caseStudyDetails
         )

@@ -23,8 +23,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.douraid.composedemo.R
 import com.douraid.composedemo.api.dto.CaseStudy
 import com.douraid.composedemo.ui.theme.ComposeDemoTheme
@@ -34,7 +32,7 @@ import com.douraid.composedemo.view.utils.caseStudiesListForPreview
 
 @Composable
 fun StudiesListScreen(
-    navController: NavController,
+    onCaseStudyClicked: (CaseStudy) -> Unit,
     caseStudies: List<CaseStudy>,
     initialCaseStudy: CaseStudy = caseStudies.first()
 ) {
@@ -64,7 +62,7 @@ fun StudiesListScreen(
 
             SmallSpacer()
 
-            CaseStudyCardShort(navController, selectedCaseStudy.value, true)
+            CaseStudyCardShort(onCaseStudyClicked, selectedCaseStudy.value, true)
 
         }
     }
@@ -118,7 +116,7 @@ private fun LogoImage() {
 private fun PreviewLightStudiesListScreen() {
     ComposeDemoTheme(darkTheme = false) {
         StudiesListScreen(
-            navController = rememberNavController(),
+            onCaseStudyClicked = {},
             caseStudies = caseStudiesListForPreview
         )
     }
@@ -129,7 +127,7 @@ private fun PreviewLightStudiesListScreen() {
 private fun PreviewDarkStudiesListScreen() {
     ComposeDemoTheme(darkTheme = true) {
         StudiesListScreen(
-            navController = rememberNavController(),
+            onCaseStudyClicked = {},
             caseStudies = caseStudiesListForPreview
         )
     }
