@@ -2,6 +2,7 @@ package com.douraid.composedemo.view.details_screen
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -19,7 +20,7 @@ import com.douraid.composedemo.api.dto.CaseStudyBody
 import com.douraid.composedemo.api.dto.CaseStudyDetails
 import com.douraid.composedemo.api.dto.CaseStudySection
 import com.douraid.composedemo.ui.theme.ComposeDemoTheme
-import com.douraid.composedemo.utils.image.NetworkImage
+import com.douraid.composedemo.utils.image.CoilImage
 import com.douraid.composedemo.view.home_screen.CaseStudyCardShort
 import com.douraid.composedemo.view.home_screen.ScreenTitle
 import com.douraid.composedemo.view.utils.SmallSpacer
@@ -72,11 +73,13 @@ private fun ComposeCaseSection(section: CaseStudySection) {
                 Text(text = body.value)
             }
             is CaseStudyBody.BodyImage -> {
-                NetworkImage(
-                    heroImageUrl = body.value,
+                CoilImage(
+                    url =  body.value,
+                    contentDescription = "Image",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
+                        .heightIn(240.dp)
+                        .padding(top = 16.dp)
                 )
             }
         }
