@@ -1,6 +1,5 @@
 package com.douraid.composedemo.view.home_screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,12 +17,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.douraid.composedemo.R
 import com.douraid.composedemo.api.dto.CaseStudy
 import com.douraid.composedemo.ui.theme.ComposeDemoTheme
 import com.douraid.composedemo.view.utils.SmallSpacer
@@ -90,24 +86,6 @@ private fun SearchInput() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-    )
-}
-
-@Composable
-private fun LogoImage() {
-    //We could change icons depending on the theme
-    val isLight = MaterialTheme.colors.isLight
-    val logoImageRes = if (isLight) {
-        R.drawable.ic_light_logo
-    } else {
-        R.drawable.ic_dark_logo
-    }
-
-    Image(
-        painter = painterResource(id = logoImageRes),
-        contentDescription = "Logo image",
-        contentScale = ContentScale.FillBounds,
-        modifier = Modifier.fillMaxSize()
     )
 }
 
