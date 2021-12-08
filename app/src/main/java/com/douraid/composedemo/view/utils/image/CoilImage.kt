@@ -1,4 +1,4 @@
-package com.douraid.composedemo.utils.image
+package com.douraid.composedemo.view.utils.image
 
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable

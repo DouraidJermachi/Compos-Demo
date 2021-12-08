@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.douraid.composedemo.api.dto.CaseStudy
 import com.douraid.composedemo.ui.theme.ComposeDemoTheme
-import com.douraid.composedemo.utils.image.CoilImage
+import com.douraid.composedemo.view.utils.image.CoilImage
 import com.douraid.composedemo.view.utils.XSmallSpacer
 import com.douraid.composedemo.view.utils.XXSmallSpacer
 import com.douraid.composedemo.view.utils.caseStudyForPreview

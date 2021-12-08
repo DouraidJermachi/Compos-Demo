@@ -1,4 +1,4 @@
-package com.douraid.composedemo.utils.usable_views
+package com.douraid.composedemo.view.utils.reusable_views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize

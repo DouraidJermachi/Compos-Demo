@@ -17,7 +17,7 @@ import com.douraid.composedemo.api.dto.CaseStudy
 import com.douraid.composedemo.model.StudiesListState
 import com.douraid.composedemo.model.StudyDetailsState
 import com.douraid.composedemo.ui.theme.ComposeDemoTheme
-import com.douraid.composedemo.utils.usable_views.CaseStudyStandardProgressBar
+import com.douraid.composedemo.view.utils.reusable_views.CaseStudyStandardProgressBar
 import com.douraid.composedemo.view.details_screen.StudyDetailsScreen
 import com.douraid.composedemo.view.home_screen.StudiesListScreen
 import com.douraid.composedemo.viewmodel.CaseStudiesViewModel

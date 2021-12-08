@@ -18,7 +18,7 @@ import com.douraid.composedemo.api.dto.CaseStudyBody
 import com.douraid.composedemo.api.dto.CaseStudyDetails
 import com.douraid.composedemo.api.dto.CaseStudySection
 import com.douraid.composedemo.ui.theme.ComposeDemoTheme
-import com.douraid.composedemo.utils.image.CoilImage
+import com.douraid.composedemo.view.utils.image.CoilImage
 import com.douraid.composedemo.view.home_screen.CaseStudyCardShort
 import com.douraid.composedemo.view.home_screen.ScreenTitle
 import com.douraid.composedemo.view.utils.SmallSpacer
